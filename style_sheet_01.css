@@ -130,6 +130,15 @@ hr.line{
     width:90%;
  }
 
+.overlaid-text-bottom{
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    font-size: small;
+    width:90%;
+ }
+
 
 /* ********************************************************************************************************************************** */
 /*Collapsible button, styling based on: https://www.w3schools.com/howto/howto_js_collapsible.asp*/
@@ -234,13 +243,26 @@ hr.line{
 /* Hide the images by default */
 .mySlides {
     display: none;
-    margin: 50px 0px;
+    /*margin: 50px 0px;*/
 }
 
 .mySlides a{
     text-decoration: none;
     color: inherit;
 }
+
+/*.mySlides img{
+    max-height: 100%;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}*/
   
 /* Next & previous buttons */
 .prev, .next {
@@ -261,7 +283,13 @@ hr.line{
   /* Position the "next button" to the right */
   .next {
     right: 0;
-    border-radius: 3px 0 0 3px;
+    border-radius: 3px;
+  }
+
+  /* Position the "prev button" to the left */
+  .prev {
+    left: 0;
+    border-radius: 3px;
   }
   
   /* On hover, add a black background color with a little bit see-through */
@@ -288,6 +316,8 @@ hr.line{
     padding: 8px 12px;
     position: absolute;
     top: 0;
+    left: 50%;
+    transform: translate(-50%, 0%);
   }
   
   /* The dots/bullets/indicators */

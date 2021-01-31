@@ -74,16 +74,72 @@
 
             <!--**********************************************************************************************************-->
             <br>
-            <div class="image-container"> 
-                <img src="resources/dc_cork.png" alt="image of Darragh Clabby">
-                <p class="image-caption">On the Sheep's Head peninsula in West Cork</p>
-            </div>
-            <div class="embedded-text">
-                <p> I'm Darragh Clabby from Dublin, Ireland. I studied as a mechanical engineer and completed a PhD at Queen's University Belfast, before embarking on a career in marine renewable energy. 
-                    I've been fortunate enough to have worked with many amazing people as part of companies developing solutions to extremely challenging problems, specifically: harnessing the energy contained ocean waves and currents. 
 
+            
+            <br>
+
+            <div id="main-image">
+                <img src="resources/DC sheeps head (crop).jpg"  alt="image of Darragh Clabby" style="width:100%">
+                <div class="overlaid-text-bottom">
+                    <p>Sheep's Head Peninsula, West Cork, September 2020</p>
+                </div>
+            </div>
+            <p> I'm Darragh Clabby from Dublin, Ireland. I studied as a mechanical engineer and completed a PhD at Queen's University Belfast, before embarking on a career in marine renewable energy. 
+                I've been fortunate enough to have worked with many amazing people as part of companies developing solutions to extremely challenging problems, specifically: harnessing the energy contained ocean waves and currents. 
+            </p>
+            <p>A large part of my work of my work has involved development of numerical simulation tools, probabilistic models & statistical analysis, and analysis of data from operating machines & meteorological instruments. 
+                This work has given me a great base to explore the fascinating fields of software development, data science, and Artificial Intelligence & Machine Learning.
+            </p>
+            <br>
+            
+            <div class="image-container"> 
+                <!--<img src="resources/DC bozz.jpg" alt="Darragh & Borris">
+                <div class="image-caption">
+                    <p>Enjoying some chicken...</p>
+                </div>-->
+
+
+                <div class="slideshow-container">
+                    
+                    <!-- Full-width images with number and caption text -->
+                    <div class="mySlides fade">
+                        <div class="numbertext">1 / 3</div>
+                        <img src="resources/DC bozz.jpg" alt="Darragh & Borris"> 
+                        <p class=image-caption>Enjoying some chicken</p>     
+                    </div>
+                
+                    <div class="mySlides fade">
+                        <div class="numbertext">2 / 3</div>
+                        <img src="resources/mtb_01.png" alt="mountain biking"> 
+                        <p class=image-caption>On the hardtail</p>     
+                    </div>
+
+                    <div class="mySlides fade">
+                        <div class="numbertext">3 / 3</div>
+                        <img src="resources/kyotoBamboo.jpeg" alt="bamboo forest, Kyoto"> 
+                        <p class=image-caption>In the bamboo forest, Kyoto</p>     
+                    </div>
+
+                    <!-- Next and previous buttons -->
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+
+                <!-- The dots/circles -->
+                <div style="text-align:center">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div> 
+                <script src="carousel.js"></script> 
+            </div>
+
+            <div class="embedded-text">
+                <p> Of course there's more to life than work...
                 </p>
             </div>
+            
+        </div>
             
         <div id="footer">
             <hr class="line">
