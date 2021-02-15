@@ -18,7 +18,10 @@ body, #header, #nav, #main, #footer{
     text-align: center;
     clear:both;
 }
-
+a{
+    text-decoration: none;
+    color: rgb(0, 100, 100);
+}
 /* ********************************************************************************************************************************** */
 /*Header Styles*/
 #header{
@@ -56,10 +59,33 @@ hr.line{
 /* Main Styles*/
 #main{
     text-align: left;
+    line-height: 1.6;
 }
 
 .greyed{
     color: gray;
+}
+
+.subtitle{
+    font-style: italic;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: x-large;
+    color: gray;
+    /*line-height: 3;*/
+}
+
+.header-sub{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-style: normal;
+}
+
+h2{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+h3{
+    font-style: italic;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .image-container{
@@ -82,6 +108,7 @@ hr.line{
 
 .image-caption{
     font-size: small;
+    text-align: center;
 }
 
 .divider{
@@ -263,18 +290,12 @@ hr.line{
     color: inherit;
 }
 
-/*.mySlides img{
-    max-height: 100%;
-    max-width: 100%;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-}*/
+.mySlides img{
+    margin-left: auto; 
+    margin-right: auto; 
+    display: block;
+    height:40vh;
+}
   
 /* Next & previous buttons */
 .prev, .next {
@@ -472,7 +493,12 @@ hr.line{
     #main-image{
         display:none;
     }
+
     #phone-image{
         display:block;
+    }
+
+    .mySlides img{
+        height:30vh;
     }
 }
