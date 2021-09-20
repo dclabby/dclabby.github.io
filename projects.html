@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        
+        <meta charset="UTF-8">
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        
+        <title>dclabby.github.io - Home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="computer science, consultants, tech, staff, database design, database administration, software development, software engineering, java, python, matlab, web design, web development">
+        <link rel="stylesheet" href="style_sheet_01.css">
+
+    </head>
+
+    <body> 
+
+        <div id="nav">
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="index.html">Home</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="projects.html"><strong>Projects</strong></a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="#" style="color:gray">Experience</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+            
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="#" style="color:gray">Education</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="interests.html">Interests</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="#" style="color:gray">Contact</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp
+            <div class="dropdown"> 
+                <p class="dropbtn">
+                    <a href="cv.html">CV</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+                <div class="dropdown-content">
+                    <a href="#" style="color:gray">Experience</a>
+                    <a href="#" style="color:gray">Education</a>
+                    <a href="#" style="color:gray">Skills</a>
+                </div>
+            </div>-->
+
+            <!--**********************************************************************************************************-->
+
+        </div>
+
+        <div id="header">
+            <h1>Projects</h1>
+        </div>
+
+
+        <div id="main">
+            <div class="subtitle">
+                <p>
+                    This page describes some projects I've undertaken. 
+                </p>
+            </div>
+
+            <hr>
+            <h2>Grid Forecaster</h2>
+            <div class="image-container"> 
+                <img src="resources/matrix4.png" alt="placeholder image">
+                <p class="image-caption">placeholder image</p>
+            </div>
+            <!--<div class="embedded-text">-->
+            <div class="subtitle2">
+                <p> An application that uses Machine Learning models to generate forecast for Ireland's electricity grid. 
+                    Forecast variables include system power generation, wind power generation, and system power demand. 
+                    This work was developed as the main project for Higher Dimploma in Computing. 
+                </p>
+            </div>
+            <hr class="divider">
+            <p> Grid Forecaster is an application that uses machine learning algorithms to
+                generate forecasts for Ireland’s electricity power demand, and wind generated
+                power. Four separate machine learning models were trained on system demand
+                and wind generation data obtained from Eirgrid’s Smart Grid Dashboard. Time
+                series forecasts were generated over a 24 hour period at 1 hour resolution. They
+                were evaluated on a test data set of 1.5 years (representing 20% of the total data
+                set). The results showed excellent accuracy for system demand, with coefficients
+                of determination greater than 0.95 for all four models. In the case of wind
+                generation the results were much poorer, with R 2 scores of 0.42 for three of the
+                four models, and as low as 0.34 for one of the models. The poor results for wind
+                generation were attributed to the fact that meteorological data (wind speed, wind
+                direction) remains to be included as part of feature engineering (work in this area
+                is ongoing). Given the excellent results observed for system demand, it is
+                expected that significant improvement will be achieved for wind generation
+                forecasts once meteorological data is incorporated in feature engineering.
+            </p>
+            <br>
+            <p>Source code: <a href="https://github.com/dclabby/gridForecaster" target="_blank">github.com/dclabby/gridForecaster</a> </p>
+            <a href="#">&uarr; back to top</a>
+            <br>
+            
+            <hr>
+            <h2>Text Summarization</h2>
+            <div class="image-container"> 
+                <img src="resources/matrix4.png" alt="placeholder image">
+                <p class="image-caption">placeholder image</p>
+            </div>
+            <div class="subtitle2">
+                <p> Applies extractive text summarization methods to generate automatic summaries of news articles from the Daily Mail data set. 
+                    Developed for the Artificial Intelligence module of the Higher Diploma in Computing. 
+                </p>
+            </div>
+            <hr class="divider">
+            <p> This project explores the application of the TextRank algorithm to the task of automatic text summarization. 
+                The TextRank algorithm ranks the importance of sentences in a text by representing the text as a graph, with 
+                vertices representing sentences and edges representing similarity between sentences. The texts to be 
+                summarized were news articles taken from the Daily Mail data set. Each text contained in the data set is 
+                accompanied by a human generated summary which may be used as reference summary against which automatically 
+                generated summaries may be assessed. Summarization was implemented according to five methods, three of which 
+                employed the TextRank algorithm. The aim of this work was to assess how the basic TextRank method compared to 
+                the simpler TF-IDF method; and to assess whether sentence embedding and unsupervised classification could be 
+                employed to further improve performance. The results suggest that the basic TextRank performed best (highest 
+                accuracy, lowest computational demand). The methods employing sentence embedding and unsupervised classification 
+                did not deliver further performance improvements.
+            </p>
+            <br>
+            <p>Source code: <a href="https://github.com/dclabby/textSummarization" target="_blank">github.com/dclabby/textSummarization</a> </p>
+            <a href="#">&uarr; back to top</a>
+            <br>
+            
+            <hr>
+            <h2>Captcha Reader</h2>
+            <div class="image-container"> 
+                <img src="resources/matrix4.png" alt="placeholder image">
+                <p class="image-caption">placeholder image</p>
+            </div>
+            <div class="subtitle2">
+                <p> An application to develop and test various Convolutional Neural Network architectures for the purpose of reading simple four letter text based CAPTCHAs. 
+                    This project was developed for the Machine Learning module of the Higher Diploma in Computing course. 
+                </p>
+            </div>
+            <hr class="divider">
+            <p> The primary goal of this project is to develop an
+                automated system capable of reading text based CAPTCHAs
+                such that it tricks the system into thinking that the user is a
+                human rather than an automated user. This will be achieved
+                by training a convolutional neural network on labelled
+                CAPTCHA images. The following additional goals of this
+                project are: 
+            </p>
+            <ul>
+                <li>To quantify the accuracy of the CAPTCHA reader
+                    in terms of its ability to predict individual
+                    characters, and four character CAPTCHAs;</li>
+                <li>To explore the effect on performance of network
+                    configuration (number of hidden layers and
+                    parameters, type of loss model, type of activation
+                    function);</li>
+                <li>To explore the effect of input data characteristics
+                    (number of features, number of training examples)
+                    on the tendency of the model to exhibit evidence of
+                    overfitting or undefitting.</li>
+            </ul>
+            <br>
+            <p>Source code: <a href="https://github.com/dclabby/captchaReader" target="_blank">github.com/dclabby/captchaReader</a> </p>
+            <a href="#">&uarr; back to top</a>
+            <br>
+
+
+
+        </div>
+
+        <div id="footer">
+            <hr class="line">
+            <p>&copy; 2021 Darragh Clabby</p>
+            <p>
+                <!--
+                <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                    <img style="border:0;width:88px;height:31px"
+                        src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+                        alt="Valid CSS!" />
+                </a>-->
+            </p>
+        </div>
+
+    </body>
+</html>  
