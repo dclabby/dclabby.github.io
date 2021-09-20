@@ -7,13 +7,13 @@ body{
 
 /* ********************************************************************************************************************************** */
 /* General Styles*/
-body, #header, #nav, #main, #footer{
+body, #header, #nav, #phone-nav, #main, #footer{
     /*border: 1px solid;*/
     background-color: white;
     color: rgb(0,50,100);
 }
 
-#header, #footer, #nav, #main{
+#header, #footer, #nav, #phone-nav, #main{
     padding: 0px 25%;
     text-align: center;
     clear:both;
@@ -46,7 +46,7 @@ hr.line{
 
 /* ********************************************************************************************************************************** */
 /* Navigation Styles*/
-#nav{
+#nav, #phone-nav{
     position: fixed;
     z-index: 2;
     background-color: rgb(0,100,100);
@@ -422,12 +422,20 @@ h3{
     clear: both;
   }
 
+
+#nav{
+    display: block;
+}
+
+#phone-nav{
+    display: none;
+}
 /* ********************************************************************************************************************************** */
 /* Re-sizing for responsive design*/
 /* ********************************************************************************************************************************** */
 /*for 980px or less */
 @media screen and (max-width: 980px) {
-	#header, #footer, #nav, #main{
+	#header, #footer, #nav, #phone-nav, #main{
         padding: 0px 5%;
     }
     
@@ -441,7 +449,7 @@ h3{
 /* ********************************************************************************************************************************** */
 /* for 700px or less */
 @media screen and (max-width: 700px) {
-	#header, #footer, #nav, #main{
+	#header, #footer, #nav, #phone-nav, #main{
         padding: 0px 2.5%;
     }
     
@@ -465,9 +473,19 @@ h3{
     #main-image{
         display:none;
     }
+
     #phone-image{
         display:block;
     }
+
+    #nav{
+        display: none;
+    }
+
+    #phone-nav{
+        display: block;
+    }
+
 }
 
 /* ********************************************************************************************************************************** */
@@ -480,7 +498,7 @@ h3{
 		font-size: 16px;
     }
     
-    #nav{
+    #nav, #phone-nav{
         height:50px;
     }
 
@@ -510,5 +528,13 @@ h3{
 
     .mySlides img{
         height:30vh;
+    }
+
+    #nav{
+        display: none;
+    }
+
+    #phone-nav{
+        display: block;
     }
 }
