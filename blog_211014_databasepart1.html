@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        
+        <meta charset="UTF-8">
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        
+        <title>dclabby.github.io - Home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="data science, machine learning, engineering, python, java, matlab, mysql, computer science, database design, database administration, software development, software engineering, web design, web development">
+        <link rel="stylesheet" href="style_sheet_01.css">
+
+    </head>
+
+    <body> 
+
+        <div id="nav">
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="index.html">Home</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="projects.html"><strong>Projects</strong></a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="#" style="color:gray">Experience</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+            
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="#" style="color:gray">Education</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="interests.html">Interests</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="#" style="color:gray">Contact</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp
+            <div class="dropdown"> 
+                <p class="dropbtn">
+                    <a href="cv.html">CV</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+                <div class="dropdown-content">
+                    <a href="#" style="color:gray">Experience</a>
+                    <a href="#" style="color:gray">Education</a>
+                    <a href="#" style="color:gray">Skills</a>
+                </div>
+            </div>-->
+
+            <!--**********************************************************************************************************-->
+
+        </div>
+
+        <div id="phone-nav">
+            <div class="dropdown"> 
+                <p class="dropbtn">
+                    <a>Menu &darr;<a>
+                    <!--<a href="#">Menu &darr;</a>-->
+                    <i class="fa fa-caret-down"></i>
+                </p>
+                <div class="dropdown-content">
+                    <a href="index.html">Home</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="#" style="color:gray">Experience</a>
+                    <a href="#" style="color:gray">Education</a>
+                    <a href="interests.html">Interests</a>
+                    <a href="#" style="color:gray">Contact</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="header">
+            <h1>Developing a Database for an Online Retailer</h1>
+        </div>
+
+
+        <div id="main">
+            <div class="subtitle">
+                <h2>Part 1: Design & Implementation
+                </h2>
+                <p> This post summarizes a project that I undertook for a course on databases. The project brief was to design and implement a database for an online 
+                    retailer, and to implement specific queries and actions on the database. I’ve split the post into two parts. Part 1 describes the design and 
+                    implementation of the database. <a href="#">Part 2</a> describes the development of SQL statements to query the database, and creation of 
+                    views and stored procedures to achieve certain goals.
+                </p>
+            </div>
+
+            <p>Author: Darragh Clabby</p>
+            <p>Date: 14/10/2021</p>
+            <p>Github Repository: <a href="https://github.com/dclabby/courseWork/tree/main/SQL/HDAIML_IntroToDatabases" target="_blank">HDAIML_IntroToDatabases</a></p>
+
+            <hr>
+            <!--<h1>Introduction</h1>
+            <div class="image-container"> 
+                <img src="resources/matrix4.png" alt="placeholder image">
+                <p class="image-caption">placeholder image</p>
+            </div>
+            <div class="embedded-text">
+            <div class="subtitle2">
+                <p> An application that uses Machine Learning models to generate forecast for Ireland's electricity grid. 
+                    Forecast variables include system power generation, wind power generation, and system power demand. 
+                    This work was developed as the main project for Higher Dimploma in Computing. 
+                </p>
+            </div>
+            <hr class="divider">-->
+
+            <h1>Introduction</h1>
+            <p>
+                In this part I’ll discuss the design and implementation of the database. This will include: 
+            </p>
+            <ul>
+                <li>Identification of requirements for the database;</li>
+                <li>Specification of tables comprising the database;</li>
+                <li>Development of an Entity Relationship Diagram (ERD);</li>
+                <li>Creation of the database using Data Definition Language (DDL);</li>
+                <li>Generation of data sets using <a href="https://www.mockaroo.com/" target="_blank">mockaroo</a>;</li>
+                <li>Population of the database with generated data using Data Manipulation Language (DML)</li>
+            </ul>
+            <br>
+            
+            <hr>
+            <h1>Design</h1>
+            <p>The design phase was implemented according to the following steps:</p>
+            <ul>
+                <li>Understand the client’s requirements;</li>
+                <li>Identify the tables necessary to implement the database;</li>
+                <li>Use an Entity Relationship Diagram to specify relationships between the database’s tables.</li>
+            </ul>
+            <br>
+
+            <h2>Requirements</h2>
+            <p>The first step in any design process is to understand the client’s requirements. In this case the client was an online retailer. The objective 
+                of the retailer is to provide customers with a choice of products to suit their needs, to process orders from customers, and to dispatch products 
+                to customers in a timely manner. Since the retailer turns over high volumes of orders, a database was required to manage orders. The database shall 
+                be required to store relevant information about: the customers (e.g. name, address, etc.); orders placed by customers (items ordered, quantities of items);
+                members of staff, including the orders that they fulfilled; items of stock (e.g. their unit price, quantity held in stock; and suppliers of stock items.
+            </p>
+
+            <p>The structure of a customer’s order may be summarized as follows: The order is composed of one or more order items; An order item consists of a single 
+                item of stock and a quantity (equal to one or more); An order’s total cost is calculated as the sum of each item’s value, where an item’s value is 
+                calculated as the product of the item’s unit price and its quantity.
+            </p>
+
+            <p>For the purpose of this project, some simplifying assumptions were made, namely that: the database does not allow for discounted order prices; and
+                The database does not track returned items.
+            </p>
+            <br>
+
+            <h2>Database Tables</h2>
+            <p>The next step in designing the database is to identify the tables that are required, and to define them in terms of their fields, data types, and 
+                primary/foreign keys. The following tables were identified:
+            </p>
+            <ul>
+                <li>Customers: this table stores details of the retailer’s customers;</li>
+                <li>Staff: this table stores details of the retailer’s staff;</li>
+                <li>Suppliers: this table stores details of the retailer’s suppliers;</li>
+                <li>Orders: this table stores details of orders placed by customers. It links to the Customers table to record the customer that placed the order, 
+                    and the Staff table to identify the member of staff that fulfilled the order;</li>
+                <li>OrderItems: This table stores details of items comprising an order. It links to the OrderItems table to identify the order, and the Stock table 
+                    to identify the stock item;</li>
+                <li>Stock: This table stores details of items of stock, including unit price and quantity in stock. It links to the Suppliers table to identify the 
+                    supplier for each item of stock.</li>
+            </ul>
+            <br>
+
+            <table>
+                <tr>
+                    <th>Table</th>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Key</th>
+                </tr>
+
+                <tr class="odd_row">
+                    <td rowspan="7">Customers</td>
+                    <td>CustomerID</td>
+                    <td>int</td>
+                    <td>Primary Key</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>FirstName</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>LastName</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>BillingAddress</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>DeliveryAddress</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>Email</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>PhoneNo</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+
+                <tr>
+                    <td rowspan="9">Staff</td>
+                    <td>StaffID</td>
+                    <td>int</td>
+                    <td>Primary Key</td>
+                </tr>
+                <tr>
+                    <td>FirstName</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>LastName</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>PhoneNo</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>JobTitle</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>DoB</td>
+                    <td>date</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Salary</td>
+                    <td>float</td>
+                    <td>&nbsp;</td>
+                </tr>
+
+                <tr class="odd_row">
+                    <td rowspan="5">Suppliers</td>
+                    <td>SupplierID</td>
+                    <td>int</td>
+                    <td>Primary Key</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>Name</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>Address</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>Email</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>PhoneNo</td>
+                    <td>varchar</td>
+                    <td>&nbsp;</td>
+                </tr>
+
+                <tr>
+                    <td rowspan="4">Orders</td>
+                    <td>OrderID</td>
+                    <td>int</td>
+                    <td>Primary Key</td>
+                </tr>
+                <tr>
+                    <td>CustomerID</td>
+                    <td>int</td>
+                    <td>Foreign Key</td>
+                </tr>
+                <tr>
+                    <td>StaffID</td>
+                    <td>int</td>
+                    <td>Foreign Key</td>
+                </tr>
+                <tr>
+                    <td>OrderDate</td>
+                    <td>date</td>
+                    <td>&nbsp;</td>
+                </tr>
+
+                <tr class="odd_row">
+                    <td rowspan="4">OrderItems</td>
+                    <td>ItemID</td>
+                    <td>int</td>
+                    <td>Primary Key</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>OrderID</td>
+                    <td>int</td>
+                    <td>Foreign Key</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>StockID</td>
+                    <td>int</td>
+                    <td>Foreign Key</td>
+                </tr>
+                <tr class="odd_row">
+                    <td>Quantity</td>
+                    <td>int</td>
+                    <td>&nbsp;</td>
+                </tr>
+
+
+                <tr>
+                    <td rowspan="4">Stock</td>
+                    <td>StockID</td>
+                    <td>int</td>
+                    <td>Primary Key</td>
+                </tr>
+                <tr>
+                    <td>SupplierID</td>
+                    <td>int</td>
+                    <td>Foreign Key</td>
+                </tr>
+                <tr>
+                    <td>UnitPrice</td>
+                    <td>float</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>StockLevel</td>
+                    <td>int</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+            <br>
+
+            <h2>Entity Relationship Diagram
+            </h2>
+            <p>An Entity Relationship Diagram (ERD) describes the relationships between tables of the database. For the tables describes in the previous section 
+                the ERD is shown below.
+            </p>
+            <div class="image-container">
+                <img src="resources/Entity Relationship Diagram3.jpg" alt="ERD for the database">
+            </div>
+            <p>The relationships shown in the ERD are described below</p>
+            
+
+            <h3>Customer/Order</h3>
+            <p>The customer places an order: this is represented by the link from CustomerID as a primary key in the Customers table, to CustomerID as a foreign key 
+                in the Orders table. The relationship is “one to many” as a single customer may place many orders;
+            </p>
+
+            <h3>Staff/Order</h3>
+            <p>A member of staff is responsible for the order: this is represented by the link from StaffID as a primary key in the Staff table, to StaffID as a 
+                foreign key in the Orders table. The relationship is “one to many” as a single staff member may fulfill many orders;
+            </p>
+
+            <h3>Order/Item</h3>
+            <p>An order consists of items: this is represented by the link from OrderID as a primary key in the Orders table, to OrderID as a foreign key in the 
+                OrderItems table. The relationship is “one to many” as a single order may consist of many order items;
+            </p>
+
+            <h3>Item/Stock</h3>
+            <p>Order items consist of stock items: this is represented by the link from StockID as a primary key in the Stock table, to StockID as a foreign key in 
+                the OrderItems table. The relationship is “one to many” as a single item of stock may appear across many order items;
+            </p>
+
+            <h3>Stock/Supplier</h3>
+            <p>Items of stock are supplied by suppliers: this is represented by the link from SupplierID as a primary key in the Suppliers table, to SupplierID as a 
+                foreign key in the Stock table. The relationship is “one to many” as a single supplier may supply many items of stock;
+            </p>
+            <br>
+
+            <hr>
+            <h1>Implementation</h1>
+            <p>Implementation of the database involved: generation of data sets; creation of the database and its tables; and population of the tables with the generated data sets.
+            </p>
+
+            <h2>Generating Data Sets</h2>
+            <p>I used <a href="https://www.mockaroo.com/" target="_blank">mockaroo</a> to generate data sets for this project. This online tool allows you to specify 
+                field names and data types corresponding to tables that you intend to populate. It will generate up to 1000 rows and then assign random values to 
+                each field. The results can be saved as a sql file which contain the DDL command to create a table, and the DML commands to populate it with the 
+                generated data.
+            </p>
+
+            <p>For this project I decided to generate two data sets: The validation data set was a small data set that I could use to manually validate queries. 
+                The test data set was a larger data set that would be intended to represent the real database. For each data set, the number of rows in each table 
+                was defined as follows:
+            </p>
+            <table class="alt-row">
+                <tr>
+                    <th>Table</th>
+                    <th>No. Rows in Validation Data Set</th>
+                    <th>No. Rows in Test Data Set</th>
+                </tr>
+                <tr>
+                    <td>Customers</td>
+                    <td>5</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <td>Staff</td>
+                    <td>5</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <td>Suppliers</td>
+                    <td>5</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <td>Orders</td>
+                    <td>20</td>
+                    <td>400</td>
+                </tr>
+                <tr>
+                    <td>OrderItems</td>
+                    <td>50</td>
+                    <td>1000</td>
+                </tr>
+                <tr>
+                    <td>Stock</td>
+                    <td>10</td>
+                    <td>20</td>
+                </tr>
+            </table>
+
+            <p>The rationale behind this assignment of rows per table was to ensure that the queries to be implemented later would yield interesting results. For 
+                example, I could have defined all tables in the test data set to have 1000 rows (based on the limit imposed by mockaroo). But this would have 
+                resulted in a lot of “one to one” relationships, e.g. one customer makes one order containing one item. This really isn’t of much interest when we 
+                get to writing queries to the database. Rather, I wanted to ensure that the intended “one to many” relationships were actually realized. So, by 
+                setting no. customers less than no. orders less than no. order items, we should get plenty of cases where a customer has placed multiple orders and 
+                each of those orders contain multiple items… which will be a lot more interesting when we start to query the database!
+            </p>
+
+            <h2>Creating the Database</h2>
+            <p>To create the test and validation databases I used the following DDL (Data Definition Language) commands:<br>
+            <code>
+                CREATE DATABASE ValData;<br>
+                CREATE DATABASE TestData;
+            </code></p>
+
+            <p>I then created tables in the database according to the database design described earlier. Below is the command to create the Customers table:<br>
+                <code>
+                    CREATE table Customers (</br>
+                    CustomerID INT,</br>
+                    FirstName VARCHAR(50),</br>
+                    LastName VARCHAR(50),</br>
+                    BillingAddress VARCHAR(50),</br>
+                    DeliveryAddress VARCHAR(50),</br>
+                    Email VARCHAR(50),</br>
+                    PhoneNo VARCHAR(50),PRIMARY KEY (CustomerID)<br>
+                    );
+                </code>
+            </p>
+            <br>
+            <h2>Populating the Database</h2>
+            <p>Finally, to complete implementation of the database the tables need to be populated. This is done by implementing the DML commands (INSERT statements) 
+                produced as part of the data generation phase (i.e. downloaded from mockaroo). An example statement to populate a row of the Customers table is given 
+                as follows:<br>
+                <code>
+                    insert into Customers <br>
+                    (CustomerID, FirstName, LastName, BillingAddress, DeliveryAddress, Email, PhoneNo) <br>
+                    values <br>
+                    (1, 'Arlee', 'Mapplethorpe', '681 Bartillon Center', '35 Dovetail Circle', 'amapplethorpe0@spotify.com', '944-451-0032');
+                </code>
+            </p>
+            <p>And there we have it, we’ve designed, created, and populated the database!</p>
+            <br>
+
+            <hr>
+            <h1>Summary</h1>
+            <p>So, in this post I’ve discussed the design and implementation of a database. As part of the design I described the requirements of the database. 
+                I used these requirements to specify the tables that would comprise the database, and I illustrated the relationships between the tables using an ERD. 
+                Following the design phase I generated synthetic data for each table using mockaroo. I then created the database and its tables using DDL, and inserted 
+                the synthetic data into the database using DML. With that complete, we can move on to the interesting stuff – using SQL to query the database and to 
+                perform actions on it. This will be the topic for part 2 where I’ll discuss some queries, as well as creation of views and stored procedures. 
+            </p>
+        </div>
+
+        <div id="footer">
+            <hr class="line">
+            <p>&copy; 2021 Darragh Clabby</p>
+            <p>
+                <!--
+                <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                    <img style="border:0;width:88px;height:31px"
+                        src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+                        alt="Valid CSS!" />
+                </a>-->
+            </p>
+        </div>
+
+    </body>
+</html>  
