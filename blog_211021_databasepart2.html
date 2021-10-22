@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        
+        <meta charset="UTF-8">
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        
+        <title>dclabby.github.io - Projects</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="data science, machine learning, engineering, python, java, matlab, mysql, computer science, database design, database administration, software development, software engineering, web design, web development">
+        <link rel="stylesheet" href="style_sheet_01.css">
+
+    </head>
+
+    <body> 
+
+        <div id="nav">
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="index.html">Home</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="projects.html"><strong>Projects</strong></a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="about.html">About</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <div class="dropdown"> <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp-->
+                <p class="dropbtn">
+                    <a href="contact.html">Contact</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+            </div>
+
+            <!--https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp
+            <div class="dropdown"> 
+                <p class="dropbtn">
+                    <a href="cv.html">CV</a>
+                    <i class="fa fa-caret-down"></i>
+                </p>
+                <div class="dropdown-content">
+                    <a href="#" style="color:gray">Experience</a>
+                    <a href="#" style="color:gray">Education</a>
+                    <a href="#" style="color:gray">Skills</a>
+                </div>
+            </div>-->
+
+            <!--**********************************************************************************************************-->
+
+        </div>
+
+        <div id="phone-nav">
+            <div class="dropdown"> 
+                <p class="dropbtn">
+                    <a>Menu &darr;<a>
+                    <!--<a href="#">Menu &darr;</a>-->
+                    <i class="fa fa-caret-down"></i>
+                </p>
+                <div class="dropdown-content">
+                    <a href="index.html">Home</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="about.html">About</a>
+                    <!--<a href="#" style="color:gray">Education</a>
+                    <a href="interests.html">Interests</a>-->
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="header">
+            <h1>Developing a Database for an Online Retailer</h1>
+        </div>
+
+
+        <div id="main">
+            <div class="subtitle">
+                <h2>Part 2: Queries & Actions
+                </h2>
+                <p> This post summarizes a project that I undertook for a course on databases. The project brief was to design and implement a database for an online 
+                    retailer, and to implement specific queries and actions on the database. I’ve split the post into two parts. 
+                    <a href="blog_211014_databasepart1.html">Part 1</a> describes the design and 
+                    implementation of the database. Part 2 describes the development of SQL statements to query the database, and creation of 
+                    views and stored procedures to achieve certain goals.
+                </p>
+            </div>
+
+            <p>Author: Darragh Clabby</p>
+            <p>Date: 21/10/2021</p>
+            <p>Github Repository: <a href="https://github.com/dclabby/courseWork/tree/main/SQL/HDAIML_IntroToDatabases" target="_blank">HDAIML_IntroToDatabases</a></p>
+
+            <hr>
+
+            <h1>Introduction</h1>
+            <p>
+                Welcome to Part 2 in the series on developing a database for an online retailer. These posts describe a project that I undertook for a course on 
+                databases. In Part 1 I discussed the design and implementation of the database. As a reminder, I’ve replicated the ERD below. 
+                This shows the database in terms of its tables, and the relationships between them. 
+            </p>
+            <div class="image-container">
+                <img src="resources/Entity Relationship Diagram3.jpg" alt="ERD for the database">
+            </div>
+            <p>In this post I’ll describe how to create SQL statements that will achieve the following tasks:</p>
+            <ul>
+                <li>Show all the details of the products that have a price greater than 100 – this will use the <strong>WHERE</strong> clause;</li>
+                <li>Show all the products with a price greater than 100, along with their associated supplier details – this will use the <strong>JOIN</strong> clause;</li>
+                <li>Create a <strong>Stored Procedure</strong> that takes start and end dates as input and displays all sales those between dates;</li>
+                <li>Create a <strong>View</strong> that shows the total price and quantity of items per customer for orders placed in the final quarter of 2020 – this will employ <strong>Grouping & Ordering</strong>;</li>
+                <li>Create a <strong>Trigger</strong> that adjusts the stock level every time a product is sold;</li>
+                <li>Create a report of the annual sales showing the total number of products sold and the total value of sales each month – this will use <strong>Grouping with Rollup</strong>;</li>
+                <li>Display the percent monthly growth in sales – this will use <strong>Self Join</strong>;</li>
+                <li><strong>Delete</strong> all customers who never buy a product from the business.</li>
+            </ul>
+            <p>
+                Recall from Part 1 that I created two databases adhering to the same schema: the TestData database was populated with a large data set; while the 
+                ValData database was populated with a smaller data set. Given that ValData contains fewer data points, it is easy to manually inspect and assess the 
+                results of SQL statements applied to it. I will therefore use the ValData database throughout this post to validate SQL statements and illustrate 
+                their results. To specify this database run the <code>USE ValData;</code> command.
+            </p>
+            
+            <br>
+            
+            <hr>
+            <h1>WHERE Clause</h1>
+            <p>We’ll start with an easy one. Let’s show all the details of the products that have a price greater than 100. This can be achieved by selecting all 
+                fields from the Stock table that have a unit price greater than 100. Translated into an SQL query, this reads as follows:</p>
+            <code>SELECT * FROM Stock where Stock.UnitPrice > 100; </code>
+            <br>
+            <p>When this statement is run on the validation data set (prefix the above statement with <code>USE ValData;</code>) it retrieves the following rows:</p>
+            <br>            
+            <table class="alt-row">
+                <tr>
+                    <th>StockID</th>
+                    <th>SupplierID</th>
+                    <th>UnitPrice</th>
+                    <th>StockLevel</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>140</td>
+                    <td>98</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>3</td>
+                    <td>150</td>
+                    <td>7</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>1</td>
+                    <td>155</td>
+                    <td>45</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>1</td>
+                    <td>105</td>
+                    <td>39</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>5</td>
+                    <td>170</td>
+                    <td>19</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>4</td>
+                    <td>110</td>
+                    <td>63</td>
+                </tr>
+            </table>
+            <br>
+            <p>
+            Recall that the validation data set had 10 rows. The statement above shows that 6 of the 10 items of stock have a price greater than 100. That means that 
+            4 of the items should have a price less than or equal to 100. We can verify this by altering the inequality in the original statement’s WHERE clause from 
+            “greater than” to “less than or equal to”, as follows: </p>
+            <code>
+                SELECT * FROM Stock where Stock.UnitPrice <= 100; 
+            </code>
+            <br>            
+            <br>
+            <table class="alt-row">
+                <tr>
+                    <th>StockID</th>
+                    <th>SupplierID</th>
+                    <th>UnitPrice</th>
+                    <th>StockLevel</th>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>65</td>
+                    <td>61</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>5</td>
+                    <td>35</td>
+                    <td>27</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>2</td>
+                    <td>60</td>
+                    <td>57</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>2</td>
+                    <td>95</td>
+                    <td>88</td>
+                </tr>
+            </table>
+            <br>
+            <p>The results show 4 rows retrieved, and all rows have a unit cost less than or equal to 100, as expected. We can now have confidence that the 
+                statement retrieves data as expected, and can be applied to the larger test data set.</p>
+            
+            <br>
+            <hr>
+            <h1>JOIN</h1>
+            <p>The next query seeks to build on the previous statement by showing all the products with a price greater than 100, along with the supplier details for 
+                those products. Since supplier details are stored in a separate table from stock details, we need to join the Stock and Suppliers tables. The Stock 
+                and Suppliers are linked by the SupplierID field, which is the primary key in the Suppliers table and the foreign key in the Stock table. We therefore 
+                use SupplierID as the field on which the join will be implemented. Finally, as before we use a WHERE statement with a conditional on the stock’s unit 
+                price to restrict the rows retrieved based on prices exceeding 100. The resulting statement is shown below. Note that to simplify the output I’ve just 
+                selected the StockID and UnitPrice fields from the Stock table, and the SupplierID and Name from the Supplier table. Note also that I’ve used an alias 
+                for Supplier.Name so that it’s shown in the results as SupplierName rather than just Name.</p>
+            <br>
+            <code>
+                SELECT Stock.StockID, Stock.UnitPrice, Suppliers.SupplierID,Suppliers.Name as SupplierName<br>
+                FROM Stock INNER JOIN Suppliers <br>
+                on Stock.SupplierID = Suppliers.SupplierID <br>
+                where Stock.UnitPrice > 100; <br>
+            </code>
+            <br>
+            <br>
+            <table class="alt-row">
+                <tr>
+                    <th>StockID</th>
+                    <th>UnitPrice</th>
+                    <th>SupplierID</th>
+                    <th>SupplierName</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>140</td>
+                    <td>3</td>
+                    <td>Livetube</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>5</td>
+                    <td>35</td>
+                    <td>Livetube</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>155</td>
+                    <td>1</td>
+                    <td>Mudo</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>105</td>
+                    <td>1</td>
+                    <td>Mudo</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>170</td>
+                    <td>5</td>
+                    <td>Cogilith</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>110</td>
+                    <td>4</td>
+                    <td>Vinder</td>
+                </tr>
+            </table>
+
+            <br>
+            <hr>
+            <h1>Stored Procedure</h1>
+            <p>
+                For the next task we’ll create a stored procedure that will retrieve all orders that were placed between some start and end date. For now, let’s not worry about the stored procedure part, but instead focus on how to construct a statement that will retrieve all orders placed in August 2020, i.e. between 2020-08-01 and 2020-08-31. This is pretty straightforward, we’d just select columns from the Orders table and restrict the retrieved fields using an appropriate WHERE. The following statement achieves this:
+                <br><br>
+                <code>SELECT * FROM Orders WHERE Orders.Orderdate >= '2020-08-01' and Orders.Orderdate <= '2020-08-31';</code>
+                <br><br>
+                … However the WHERE clause is a little unwieldy looking! We can tidy it up by writing it as follows:
+                <br><br>
+                <code>SELECT * FROM Orders where Orders.Orderdate between '2020-08-01' and '2020-08-31';</code>
+                <br><br>
+                Much nicer! But wouldn’t it be even nicer if we could separate the specification of dates from the statement, and instead pass the dates to the statement as if they were arguments to a function? This is where the stored procedure comes in.  The statement below shows how this can be achieved for the case we’re considering here:
+                <br><br>
+                <code>DELIMITER //<br>
+                CREATE procedure getTransactions(IN startDate DATE, IN endDate DATE)<br>
+                begin<br>
+                    SELECT * FROM Orders where Orders.Orderdate >= startDate and Orders.Orderdate <= endDate;<br>
+                END//</code>
+                <br><br>
+                The first and last lines (DELIMITER//; END//) just define the start and end of the procedure. The second line creates the procedure and defines its name (think of it as a function name), and arguments. The arguments are specified by their names (startDate and endDate) and data types (both DATE in this case). The body of the stored procedure just implements the statement, but with the variables startDate and endDate replacing the “hard coded” dates that we used before. Once the stored procedure has been defined, we can call it with whatever dates we want. Let’s run it for the month of August, as before:
+                <br><br>
+                <code>Call getTransactions('2020-08-01', '2020-08-31');</code>
+                <br><br>
+                For the validation data set this returns 4 rows:
+            </p>
+                <br>
+
+            <table class="alt-row">
+                <tr>
+                    <th>OrderID</th>
+                    <th>CustomerID</th>
+                    <th>StaffID</th>
+                    <th>OrderDate</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>2020-08-14</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>3</td>
+                    <td>2020-08-27</td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td>5</td>
+                    <td>5</td>
+                    <td>2020-08-09</td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>2020-08-14</td>
+                </tr>
+            </table>
+            <br>
+            <p>Since the validation data set only has 20 rows in the Orders table, its easy to verify that the stored procedure is working as expected by retrieving all rows and inspecting the order dates manually. 
+            </p>
+
+            <br>
+            <hr>
+            <h1>Views, Grouping, and Ordering</h1>
+            <p>The next task uses views. A view can be thought of as a virtual table that stores the results of a particular query statement. A view can be queried 
+                in the same manner as a table, but it is important to note that it is not actually a table since it does not affect the schema of the database. 
+                Rather, the contents of a view are dynamically computed from the data already contained in the database.</p>
+            <p>With that in mind, the next task was to create a view that shows the total number of items a customer buys from the business in the final quarter of 
+                2020 along with the total price. There’s a lot packed into that task, so lets think about what’s required for each part:
+                <ul>
+                    <li>the total number of items a customer buys: For a given customer the total quantity of items ordered is given by sum(Quantity) for all items in 
+                        all orders placed in October. This involves two tables: Order and OrderItems;</li>
+                    <li>the total price: For a given order the total price that the customer will pay is calculated as sum(Quantity*unit price) for all items in an 
+                        order. This therefore involves three fields across three different tables: Order.OrderID; OrderItems.Quantity; Stock.UnitPrice</li>
+                </ul>
+            </p>
+
+            <p>
+                Since this task requires combination of fields from three separate tables, its core element is double join: whereby the Orders and OrderItems tables 
+                are first joined (highlighted in <mark style="background-color:rgb(160, 200, 200)">green</mark> below), and then a second join is applied to the 
+                Stock table (highlighted in <mark style="background-color:rgb(200, 160, 160)">red</mark> below). The full statement, 
+                including the double join is given as follows:
+                <br><br>
+                <code>
+                create view customerOrders as<br>
+                SELECT Orders.CustomerID, <br>
+                sum(UnitPrice*Quantity) as totalPrice,<br>
+                count(*) as NumItems,<br>
+                sum(Quantity) as totalQty FROM<br>
+                <mark style="background-color:rgb(160, 200, 200)">(Orders inner join OrderItems on Orders.OrderID = OrderItems.OrderID) </mark><br>
+                inner join <br>
+                <mark style="background-color:rgb(200, 160, 160)">Stock on Stock.StockID = OrderItems.StockID</mark><br>
+                where Orders.Orderdate between '2020-10-01' and '2020-12-31'<br>
+                group by CustomerID<br>
+                order by CustomerID;<br>
+                </code>
+                <br>
+                Once the double join has been implemented the results are restricted to the dates of interest using the WHERE clause. Based on the returned fields, 
+                the additional fields of interest may be calculated. These fields are: totalPrice; NumItems; totalQty. Note that the calculation of these fields uses 
+                aggregate the functions sum and count. These fields work with the GROUP BY clause so that they are applied over each CustomerID, e.g. the sum() 
+                function implements a summation over all fields for a given customer. Finally, the results are ordered in ascending CustomerID.
+                <br>                
+                Once the view has been created by running the statement above, its fields can be retrieved in the same manner as applies for a normal table:
+                <br><br>
+                <code>
+                SELECT CustomerID, NumItems, totalQty, totalPrice FROM customerOrders;
+                </code>
+                <br>
+                <br>
+                The results are shown below:
+            </p>
+            <br>
+            <table class="alt-row">
+                <tr>
+                    <th>CustomerID</th>
+                    <th>NumItems</th>
+                    <th>totalQty</th>
+                    <th>totalPrice</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>18</td>
+                    <td>1120</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>190</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>7</td>
+                    <td>37</td>
+                    <td>3860</td>
+                </tr>
+            </table>
+            <br>
+            <p>Note, if you got Error Code: 1055 when running this you might need to alter the sql mode by removing the ‘ONLY_FULL_GROUP_BY’ clause. This can be done 
+                by running the following statement (see: 
+                <a href="https://stackoverflow.com/questions/36207042/error-code-1055-incompatible-with-sql-mode-only-full-group-by" target="_blank"> here</a>
+                for further details)
+                <br><br>
+                <code>
+                    SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+                </code>
+                <br><br>
+            </p>
+
+            <p>
+                To check this result, we can use the validation dataset and view rows across all three tables involved (Orders, OrderItems, and Stock). This can be 
+                viewed by isolating the “double join” portion of the statement that we used for the orderPrice view. For simplicity I’ll only look at results for 
+                customer 1 by adding the WHERE clause at the end:
+                <br><br>
+                <code>
+                    SELECT CustomerID, OrderDate, UnitPrice, Quantity FROM<br>
+                    (Orders inner join OrderItems on Orders.OrderID = OrderItems.OrderID) <br>
+                    inner join <br>
+                    Stock on Stock.StockID = OrderItems.StockID<br>
+                    WHERE CustomerID = 1;<br>
+                </code>
+                <br><br>
+                The results show that Customer 1 made a single order in the final quarter of 2020 (on 21st December) which consisted of: three distinct items; a total 
+                quantity of 18 (10 + 1 + 7); and a total price of 60*10 + 65*1 + 65*7 = 1120. Referring back to the table above, we can see that these numbers correspond 
+                to the data stored in the customerOrders view for customer 1.
+            </p>
+            <p>
+                Note that Customer 4 is another interesting verification case since they made three orders in the final quarter of 2020… However, I won’t get into 
+                this now (feel free to explore the source code if your interested in the details of this case).
+            </p>
+
+            <br>
+            <hr>
+            <h1>Trigger</h1>
+            <p>
+                For the next task I’ll create a trigger that adjusts the stock level every time a product is sold. A trigger is like a stored procedure that is 
+                automatically called (i.e. triggered) to take some action when some specific event occurs. In this case the event is that a product has been sold, 
+                while the action is to update the stock level based on the quantity of the item sold. From the perspective of the database, the event corresponds to 
+                a row being added to the OrdersItems table. The action corresponds to subtraction of the item’s stock level based on the quantity ordered. The 
+                following statement implements this trigger:
+                <br><br>
+                <code>
+                    DELIMITER $$ <br>
+                    CREATE TRIGGER updateStockLevel AFTER INSERT ON OrderItems<br>
+                        FOR EACH ROW<br>
+                        BEGIN<br>
+                            UPDATE Stock<br>
+                            SET <mark style="background-color:rgb(200, 160, 160)">Stock.Stocklevel = Stock.Stocklevel - </mark><br>
+                            <mark style="background-color:rgb(160, 160, 200)">(SELECT Quantity from OrderItems ORDER BY ItemID DESC LIMIT 1)</mark><br>
+                            WHERE<br>
+                            <mark style="background-color:rgb(160, 200, 200)">Stock.StockID = (SELECT StockID FROM OrderItems ORDER BY ItemID DESC LIMIT 1)</mark>;<br>
+                    END$$<br>
+                    DELIMITER ;<br>
+                </code>
+            </p>
+
+            <p>
+                The first line specifies the name of the trigger, and the associated event. The body of the trigger is defined following BEGIN. The first part is 
+                straightforward, it just states that we’ll be updating the Stock table. Next is the SET part. This is where the real functionality is defined. The 
+                basic idea is that we want to 
+                <mark style="background-color:rgb(200, 160, 160)">decrement the stock level </mark>
+                corresponding to the 
+                <mark style="background-color:rgb(160, 200, 200)">last item added to the OrderItems table</mark>
+                , by the 
+                <mark style="background-color:rgb(160, 160, 200)">quantity of the item that was ordered</mark>. 
+                The quantity and the stock ID for the last item added to the OrderItems table can be retrieved by ordering in descending order of 
+                OrderItems (ORDER BY ItemID DESC), and limiting to the first row (LIMIT 1). 
+            </p>
+            <p>
+                The trigger can be verified by adding an item to OrderItems and checking that the stock level for that item changed as expected. First let’s 
+                check the stock level for the first three stock items:
+                <br><br><code>
+                    SELECT * FROM Stock WHERE StockID Between 1 and 3;
+                </code><br><br>
+            </p>
+
+            <table class="alt-row">
+                <tr>
+                    <th>StockID</th>
+                    <th>SupplierID</th>
+                    <th>UnitPrice</th>
+                    <th>StockLevel</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>140</td>
+                    <td>198</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>65</td>
+                    <td>61</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>5</td>
+                    <td>35</td>
+                    <td>27</td>
+                </tr>
+            </table>
+            <br>
+            <p>
+                Now lets simulate the case that an item was sold by adding a row to the OrderItems table. Lets simulate 
+                the case that we sold 11 items corresponding to StockID = 2. Recall that the validation data set was defined with 50 order items and 20 orders. So 
+                the next sale will have an OrderID of 21 and an ItemID of 51. This sale may be simulated as follows:
+                <br><br><code>
+                    insert into OrderItems (ItemID, StockID, OrderID, Quantity) values (51, 2, 21, 11);
+                </code><br><br>
+                We now can check that the stock level for StockID 2 changed from 61 to 61 – 11 = 50. We can do this by re-running the query on the Stock table for 
+                StockID between 1 and 3. The result is as follows:
+            </p>
+            <br>
+
+            <table class="alt-row">
+                <tr>
+                    <th>StockID</th>
+                    <th>SupplierID</th>
+                    <th>UnitPrice</th>
+                    <th>StockLevel</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>140</td>
+                    <td>198</td>
+                </tr>
+                <tr>
+                    <td><strong>2</strong></td>
+                    <td><strong>1</strong></td>
+                    <td><strong>65</strong></td>
+                    <td><strong>50</strong></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>5</td>
+                    <td>35</td>
+                    <td>27</td>
+                </tr>
+            </table>
+            <br>
+            <p>
+                This shows that the quantity for StockID 2 changed as expected, while quantities for the other stock items remained unaffected. We can therefore 
+                conclude that the trigger works as expected.
+            </p>
+
+            <br>
+            <hr>
+            <h1>Group with Rollup</h1>
+            <p>The next task aims to create a report showing the total sales and quantity of items sold for each month of 2020, along with the total sales and 
+                quantities sold over the entire year. For this task I’ll create a view called monthlySales. The full statement is shown below. 
+            </p>
+            <p>
+                <code>
+                    create view monthlySales as<br>
+                    SELECT coalesce(month(x.OrderDate), 'annualTotal') as monthNumber, <br>
+                    sum(x.totalPrice) as totalSales,<br>
+                    sum(x.totalQty) as totalQty<br>
+                    FROM<br>
+                    <br>
+                    (SELECT Orders.OrderID, Orders.OrderDate, <br>
+                    sum(UnitPrice*Quantity) as totalPrice,<br>
+                    sum(Quantity) as totalQty<br>
+                    FROM<br>
+                    (Orders inner join OrderItems on Orders.OrderID = OrderItems.OrderID) <br>
+                    inner join <br>
+                    Stock on Stock.StockID = OrderItems.StockID<br>
+                    group by OrderID) as x<br>
+                    <br>
+                    group by month(x.OrderDate) with rollup;<br>
+                </code>
+            </p>
+            <br>
+            <p>Note that I’ve divided this statement into three blocks. In the first block the select statement employs the coalesce function to add an extra row to 
+                the twelve individual rows for each month. This additional row will show the annual totals of sales and quantities. It also uses sum functions to 
+                calculate the total sales and total quantities. In the third block, the group by month clause indicates that these summations will be applied over 
+                each month. This gives us the first 12 rows. The last row is defined by specifying “with rollup” as part of the group by clause. This indicates that 
+                an additional row showing the sum of each column will be included. The main body of the statement is in the second block. This should look familiar, 
+                as its pretty much the same principle as was used to create the customerOrders view. </p>
+
+            <p>Note that this second block could have been created as a view. However, I’ve instead chosen to include the block as part of the overall statement. In 
+                cases where this approach is taken, we need to assign an alias to the block so that its results can be accessed in other parts of the statement. In 
+                this case I assigned the alias x to the contents of the second block. This means that I can access the rows retrieved by this block in other parts of 
+                the statement. For example, in the first block I can access totalPrice by referring to the alias, i.e. x.totalPrice.</p>
+
+            <p>To check the output for this statement I can run the following:</p>
+
+            <p><code>SELECT * from monthlySales;</code></p>
+            <br>
+            <table class="alt-row">
+                <tr>
+                    <th>month</th>
+                    <th>totalSales</th>
+                    <th>totalQty</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>6335</td>
+                    <td>53</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>2185</td>
+                    <td>17</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>1725</td>
+                    <td>16</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>1190</td>
+                    <td>7</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>1605</td>
+                    <td>14</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>1700</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>1185</td>
+                    <td>15</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>5210</td>
+                    <td>46</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>5215</td>
+                    <td>46</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>1840</td>
+                    <td>17</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>1625</td>
+                    <td>13</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>1705</td>
+                    <td>13</td>
+                </tr>
+                <tr>
+                    <td>annualTotal</td>
+                    <td>31520</td>
+                    <td>281</td>
+                </tr>
+            </table>
+            <br>
+            <p>As a quick verification I can check that the total sales and quantities by month over the final quarter match the total sales and quantities by customer over the 
+                same period. First lets look at the total sales and quantities by month. From the monthlySales view (shown in the table above) we see that the total sales and 
+                quantities over the final quarter (months 10, 11, 12) are:
+            </p>
+            <ul>
+                <li>Final quarter sales by month = 1840 + 1625 + 1705 = 5170;</li>
+                <li>Final quarter quantities by month = 17 + 13 + 27 = 57</li>
+            </ul>
+            <p>From the customerOrders view we see that the total sales and quantities over the final quarter are:</p>
+            <ul>
+                <li>Final quarter sales by customer = 1120+190+3860 = 5170;</li>
+                <li>Final quarter sales by customer = 18 + 2 + 37 = 57</li>
+            </ul>
+            <p>Since both total sales and total quantities match, we can have confidence that the monthlySales view is operating as intended.</p>
+
+
+            <br>
+            <hr>
+            <h1>Self Join</h1>
+            <p>For the next task we’ll display the percentage growth in sales for each month of the year. In this case the growth for month j is defined as:</p>
+            <p>100*(totalSales(month j) - totalSales(month j-1))/totalSales(month j-1)</p>
+            <p>For this task we’ll use the monthlySales view defined in the previous section. To implement the equation for percent growth defined above we’d need to have 
+                sales for a given month along with sales for the preceding month on the same row. How can we do this? </p>
+            <p>The answer is to use a self join.
+                Thankfully this has nothing to do with a superglue accident... Rather, it refers to joining a table or a view to itself. In this case we'll implement 
+                a self join on the monthlySales view. By assigning aliases to each instance of the monthlySales view, we can access them separately. In this case we 
+                assign aliases of 
+                lastMonth and thisMonth to each instance of the view. The real trick comes with the ON part of the JOIN statement, where we increment last month’s month 
+                number by one and set it equal to this month’s month number. So, if we consider the case of July (month number = 7), it will be joined to June (month number = 
+                6) since last month + 1 = 7. Finally, we want to ignore January since data from December 2019 is not available. We therefore specify that only months greater 
+                than 2 should be considered.
+            </p>
+            <br>
+            <code>
+                SELECT thisMonth.monthNumber as this_month, 100*(thisMonth.totalSales - lastMonth.totalSales)/lastMonth.totalSales as perCent_sales_Growth<br>
+                from monthlySales lastMonth<br>
+                inner join <br>
+                monthlySales thisMonth <br>
+                ON lastMonth.monthNumber + 1 = thisMonth.monthNumber<br>
+                and thisMonth.monthNumber >= 2;<br>
+            </code>
+            <br>
+            <p>The results are shown below. </p>
+            <br>
+            <table class="alt-row">
+                <tr>
+                    <th>month</th>
+                    <th>%Growth</th>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>-65.5</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>-21.1</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>-31.0</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>34.9</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>5.9</td>
+                </tr>
+                <tr>
+                    <td><strong>7</strong></td>
+                    <td><strong>-30.3</strong></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>339.7</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>0.1</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>-64.7</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>-11.7</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>4.9</td>
+                </tr>
+            </table>
+            <br>
+            <p>
+                To verify this let’s just quickly check the results for July. The table above shows a 30.3% decline in sales. Referring back to the monthlySales view we see that 
+                sales in June and July were 1700 and 1185 respectively. The percent sales growth is therefore 100*(1185 -1700)/1700 = -30.3%, i.e. a decline of 30.3%.
+            </p>
+
+
+            <br>
+            <hr>
+            <h1>Delete</h1>
+            <p>For the final task we want to get rid of all those time wasters that never buy a product from the business! The following statement retrieves those 
+                customers:
+            </p>
+            <br>
+            <code>
+                SELECT Customers.CustomerID, <br>
+                Customers.FirstName, <br>
+                Customers.LastName <br>
+                FROM Customers <br>
+                WHERE Customers.CustomerID NOT IN <br>
+                (SELECT Orders.CustomerID FROM Orders);<br>
+            </code>
+            <br>
+            <p>The results are as follows:</p>
+            <br>
+
+            <table class="alt-row">
+                <tr>
+                    <th>CustomerID</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Homer</td>
+                    <td>Simpson</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Ned</td>
+                    <td>Flanders</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Barney</td>
+                    <td>Gumble</td>
+                </tr>
+            </table>    
+            <br>
+            <p>So to get rid of Homer, Flanders, and Barney, we can implement the following:</p>
+            <br>
+            <code>
+                DELETE FROM Customers<br>
+                WHERE Customers.CustomerID NOT IN <br>
+                (SELECT Orders.CustomerID FROM Orders);<br>
+            </code>
+            <br>
+            <p>We can confirm that they’ve been removed by inspecting the remaining rows in the Customers table using:</p>
+            <code>SELECT * FROM Customers;</code>
+            <br>
+            <p>If you got error code 1175 when you tried the delete statement you might need to disable safe mode. You can do this by running the following statement:</p>
+            <code>SET SQL_SAFE_UPDATES = 0;</code>
+            <br>
+
+            <br>
+            <hr>
+            <h1>Summary</h1>
+            <p>So that concludes our adventure with SQL… for now at least! I hope you found these posts useful. If you'd like to check out the sql files you can find 
+                them in 
+                <a href="https://github.com/dclabby/courseWork/tree/main/SQL/HDAIML_IntroToDatabases" target="_blank">this</a>
+                 Github repository. Please feel free to 
+                 <a href="contact.html">contact</a>
+                  me with any questions, thoughts, or feedback
+            </p>
+            <p>Best,<br>Darragh</p>
+        </div>
+
+        <div id="footer">
+            <hr class="line">
+            <p>&copy; 2021 Darragh Clabby</p>
+            <p>
+                <!--
+                <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                    <img style="border:0;width:88px;height:31px"
+                        src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+                        alt="Valid CSS!" />
+                </a>-->
+            </p>
+        </div>
+
+    </body>
+</html>  
